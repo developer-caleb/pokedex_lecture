@@ -17,8 +17,29 @@ class _RecipeDetailPageState extends State<PokemonDetailPage> {
         title: Text('Pokemon Detail'),
       ),
       body: SafeArea(
-          child: Column(
+          child: ListView(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'No.${widget.pokemon.indexNum.toString()}',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w700),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  widget.pokemon.name,
+                  style: TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: SizedBox(
@@ -30,7 +51,25 @@ class _RecipeDetailPageState extends State<PokemonDetailPage> {
               ),
             ),
           ),
-          Text(widget.pokemon.name),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            '보유기술',
+            style: TextStyle(fontSize: 20),
+          ),
+          ...[
+            Text(widget.pokemon.skills[0].name),
+            Text(widget.pokemon.skills[1].name),
+          ],
+          Text(widget.pokemon.skills[0].name),
+          Text(widget.pokemon.skills[1].name),
+          ...List.generate(widget.pokemon.skills.length,
+              (index) => Text('${widget.pokemon.skills[index].name} - ${widget.pokemon.skills[index].damage}')),
+          Table(
+            border: TableBorder.all(),
+            children: [],
+          )
         ],
       )),
     );
