@@ -10,6 +10,7 @@ class PokemonDetailPage extends StatefulWidget {
 }
 
 class _RecipeDetailPageState extends State<PokemonDetailPage> {
+  double lv = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,12 +61,25 @@ class _RecipeDetailPageState extends State<PokemonDetailPage> {
           Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Text(
-              '보유기술',
+              '보유기술(LV : ${lv.toInt()})',
               style: TextStyle(fontSize: 20),
             ),
           ),
+          Slider(
+            value: lv,
+            min: 1,
+            max: 99,
+            divisions: 98,
+            label: 'lv : ${lv.toInt().toString()}',
+            onChanged: (double value) {
+              print(value);
+              setState(() {
+                lv = value;
+              });
+            },
+          ),
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             child: Table(
               border: TableBorder.all(),
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -76,14 +90,16 @@ class _RecipeDetailPageState extends State<PokemonDetailPage> {
                   Center(child: Text('위력')),
                   Center(child: Text('PP')),
                 ]),
-                ...List.generate(
-                    widget.pokemon.skills.length,
-                    (index) => TableRow(children: [
-                          Center(child: Text(widget.pokemon.skills[index].learningLevel.toString())),
-                          Center(child: Text(widget.pokemon.skills[index].name)),
-                          Center(child: Text(widget.pokemon.skills[index].damage.toString())),
-                          Center(child: Text(widget.pokemon.skills[index].pp.toString())),
-                        ]))
+                ...List.generate(widget.pokemon.skills.where((element) => lv >= element.learningLevel).length, (index) {
+                  List<SkillModel> skillSet =
+                      widget.pokemon.skills.where((element) => lv >= element.learningLevel).toList();
+                  return TableRow(children: [
+                    Center(child: Text(skillSet[index].learningLevel.toString())),
+                    Center(child: Text(skillSet[index].name.toString())),
+                    Center(child: Text(skillSet[index].damage.toString())),
+                    Center(child: Text(skillSet[index].pp.toString())),
+                  ]);
+                })
               ],
             ),
           )
