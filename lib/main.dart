@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
-            Image.asset(pokemon.imageAddress),
+            Hero(tag: pokemon.imageAddress, child: Image.asset(pokemon.imageAddress)),
             SizedBox(
               height: 10,
             ),
