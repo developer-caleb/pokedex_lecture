@@ -10,8 +10,8 @@ class PokemonModel {
     required this.indexNum,
     required this.skills,
   }) {
-    assert(indexNum > 0);
-    assert(skills.isNotEmpty);
+    assert(indexNum > 0, 'index가 0보다 커야함');
+    assert(skills.isNotEmpty, '스킬은 비어 있으면 안 됨');
     print('PokemonModel 객체 생성 완료 $name');
   }
 
